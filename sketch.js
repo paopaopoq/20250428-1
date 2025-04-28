@@ -27,8 +27,12 @@ function draw() {
     }
   }
 
-  // 繪製攝影機影像
-  image(capture, x, y, capture.width, capture.height);
+  // 翻轉影像以修正顛倒問題
+  push(); // 儲存當前繪圖狀態
+  translate(x + capture.width, y); // 移動畫布原點到影像位置
+  scale(-1, 1); // 水平翻轉影像
+  image(capture, 0, 0, capture.width, capture.height); // 繪製影像
+  pop(); // 恢復繪圖狀態
 
   // 繪製 overlayGraphics 在攝影機影像上方
   image(overlayGraphics, x, y, capture.width, capture.height);
