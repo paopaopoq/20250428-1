@@ -24,6 +24,12 @@ function draw() {
       overlayGraphics.fill(col); // 設定圓的顏色
       overlayGraphics.noStroke();
       overlayGraphics.ellipse(i + 10, j + 10, 15, 15); // 繪製圓，中心點偏移 10
+
+      // 計算方框顏色，隨時間變化
+      let blueShade = map(sin(frameCount * 0.05 + i * 0.1 + j * 0.1), -1, 1, 100, 255);
+      overlayGraphics.stroke(0, 0, blueShade); // 設定方框的藍色漸層
+      overlayGraphics.noFill();
+      overlayGraphics.rect(i, j, 20, 20); // 繪製方框，大小與單位一致
     }
   }
 
