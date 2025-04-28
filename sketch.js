@@ -7,11 +7,14 @@ function setup() {
   capture.size(width * 0.8, height * 0.8); // 設定影像大小為畫布的 80%
   capture.hide(); // 隱藏原始攝影機影像
 
-  // 建立與攝影機影像大小相同的圖形緩衝區
+  // 確保 overlayGraphics 的大小與 capture 一致
   overlayGraphics = createGraphics(capture.width, capture.height);
   overlayGraphics.fill(255, 0, 0, 150); // 半透明紅色
+  overlayGraphics.noStroke();
+  overlayGraphics.rect(0, 0, overlayGraphics.width, overlayGraphics.height); // 填滿紅色背景
   overlayGraphics.textSize(32);
   overlayGraphics.textAlign(CENTER, CENTER);
+  overlayGraphics.fill(255); // 白色文字
   overlayGraphics.text("Overlay Text", overlayGraphics.width / 2, overlayGraphics.height / 2);
 }
 
