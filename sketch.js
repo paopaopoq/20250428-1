@@ -9,13 +9,6 @@ function setup() {
 
   // 確保 overlayGraphics 的大小與 capture 一致
   overlayGraphics = createGraphics(capture.width, capture.height);
-  overlayGraphics.fill(255, 0, 0, 150); // 半透明紅色
-  overlayGraphics.noStroke();
-  overlayGraphics.rect(0, 0, overlayGraphics.width, overlayGraphics.height); // 填滿紅色背景
-  overlayGraphics.textSize(32);
-  overlayGraphics.textAlign(CENTER, CENTER);
-  overlayGraphics.fill(255); // 白色文字
-  overlayGraphics.text("Overlay Text", overlayGraphics.width / 2, overlayGraphics.height / 2);
 }
 
 function draw() {
@@ -23,12 +16,19 @@ function draw() {
   let x = (width - capture.width) / 2; // 計算影像的水平中心位置
   let y = (height - capture.height) / 2; // 計算影像的垂直中心位置
 
-  // 翻轉影像以修正顛倒問題
-  push(); // 儲存當前繪圖狀態
-  translate(x + capture.width, y); // 移動畫布原點到影像位置
-  scale(-1, 1); // 水平翻轉影像
-  image(capture, 0, 0, capture.width, capture.height); // 繪製影像
-  pop(); // 恢復繪圖狀態
+  // 更新 overlayGraphics
+  overlayGraphics.background(0); // 設定背景為黑色
+  for (let i = 0; i < overlayGraphics.width; i += 20) {
+    for (let j = 0; j < overlayGraphics.height; j += 20) {
+      let col = capture.get(i, j); // 從 capture 取得顏色
+      overlayGraphics.fill(col); // 設定圓的顏色
+      overlayGraphics.noStroke();
+      overlayGraphics.ellipse(i + 10, j + 10, 15, 15); // 繪製圓，中心點偏移 10
+    }
+  }
+
+  // 繪製攝影機影像
+  image(capture, x, y, capture.width, capture.height);
 
   // 繪製 overlayGraphics 在攝影機影像上方
   image(overlayGraphics, x, y, capture.width, capture.height);
